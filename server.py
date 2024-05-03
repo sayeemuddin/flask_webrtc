@@ -41,7 +41,7 @@ def on_join_room(data):
     names_sid[sid] = display_name
 
     # broadcast to others in the room
-    print("[{}] New member joined: {}<{}>".format(room_id, display_name, sid))
+    print("[{}] New member joined: {} {} ".format(room_id, display_name, sid))
     emit("user-connect", {"sid": sid, "name": display_name},
          broadcast=True, include_self=False, room=room_id)
 
@@ -66,7 +66,7 @@ def on_disconnect():
     room_id = rooms_sid[sid]
     display_name = names_sid[sid]
 
-    print("[{}] Member left: {}<{}>".format(room_id, display_name, sid))
+    print("[{}] Member left: {} {} ".format(room_id, display_name, sid))
     emit("user-disconnect", {"sid": sid},
          broadcast=True, include_self=False, room=room_id)
 
@@ -94,4 +94,4 @@ def on_data(data):
 
 
 if any(platform.win32_ver()):
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=True, host='0.0.0.0', ssl_context='adhoc')
